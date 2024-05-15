@@ -1,6 +1,18 @@
-'use client'
-import React, { useState } from 'react'
+"use client"
+
+import { useState } from 'react'
 import { Button } from './ui/button'
+
+// Define a TypeScript interface for the props of the CounterButton
+interface CounterButtonProps {
+  count: number
+  setCount: React.Dispatch<React.SetStateAction<number>>
+}
+
+// Using the defined interface to type the props
+const CounterButton = ({ count, setCount }: CounterButtonProps) => (
+  <Button onClick={() => setCount(count + 1)}>Clicked {count} times</Button>
+)
 
 export default function Hero() {
   const [count1, setCount1] = useState(0)
@@ -13,33 +25,18 @@ export default function Hero() {
 
   return (
     <div className='container mt-5'>
-      <div className='flex justify-center gap-10'>
+      <div className='flex flex-col items-center justify-center gap-4'>
         <small className='text-sm font-medium leading-none'>
-        Counters that update separately
+          Counters that update separately
         </small>
-        <MyButton count={count1} setCount={setCount1} />
-        <MyButton count={count2} setCount={setCount2} />
-        <Button variant='destructive' onClick={handleReset}>
-          Reset
-        </Button>
+        <div className='flex items-center justify-between gap-4'>
+          <CounterButton count={count1} setCount={setCount1} />
+          <CounterButton count={count2} setCount={setCount2} />
+          <Button variant='destructive' onClick={handleReset}>
+            Reset
+          </Button>
+        </div>
       </div>
     </div>
-  )
-}
-
-interface MyButtonProps {
-  count: number
-  setCount: React.Dispatch<React.SetStateAction<number>>
-}
-
-function MyButton({ count, setCount }: MyButtonProps) {
-  const handleClick = () => {
-    setCount(count + 1)
-  }
-
-  return (
-    <Button variant={'secondary'} onClick={handleClick}>
-      Clicked {count} times
-    </Button>
   )
 }
